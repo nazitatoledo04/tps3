@@ -70,7 +70,7 @@ def mostrar_arreglo(vec):
 
 
 def menu():
-    print("Menu de opciones:")
+    print("--Menu de opciones--")
     print("1-Agregar Envio")
     print("2-Mostrar Envios")
     print("3-Buscar Envios")
