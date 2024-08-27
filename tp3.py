@@ -71,16 +71,16 @@ def mostrar_arreglo(vec):
 
 def menu():
     print("--Menu de opciones--")
-    print("1-Agregar Envio")
-    print("2-Mostrar Envios")
-    print("3-Buscar Envios")
-    print("4-Eliminar Envio")
-    print("5-punto 5")
-    print("6-punto 6")
-    print("7-punto 7")
-    print("8-punto 8")
-    print("9-punto 9")
-    print("0-Salir")
+    print("1. Agregar Envio")
+    print("2. Mostrar Envios")
+    print("3. Buscar Envios")
+    print("4. Eliminar Envio")
+    print("5. punto 5")
+    print("6. punto 6")
+    print("7. punto 7")
+    print("8. punto 8")
+    print("9. punto 9")
+    print("0. Salir")
     return int(input("Ingrese Opcion: "))
 
 
