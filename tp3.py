@@ -58,6 +58,11 @@ def principal():
     n_envios = 0
     archivo = open("envios-tp3.txt", "r")
     for i in archivo:
+        if n_envios >= 1:
+            cp = i[0:9].strip()
+            direccion = i[9:29].strip()
+            tipo = i[29].strip()
+            pago = i[30].strip()
         for car in i:
             es_digito(car)
             es_mayuscula(car)
