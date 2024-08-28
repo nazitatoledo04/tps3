@@ -21,11 +21,13 @@ def es_mayuscula(car):
 def es_digito(car):
     return '0' <= car <= '9'
 
+
 def solo_digit(car):
     for caracter in car:
         if not ('0' <= caracter <= '9'):
             return False
     return True
+
 
 def calcular_importe(tipo, cp, pago):
     precio = 0
@@ -44,10 +46,9 @@ def calcular_importe(tipo, cp, pago):
         precio = 14300
     elif tipo == 6:
         precio = 17900
-    
-  
+
     if len(cp) == 9:
-        region = int(cp[0])  
+        region = int(cp[0])
         if region in (0, 1, 2, 3):
             precio *= 1.25
         elif region in (4, 5, 6, 7):
@@ -55,23 +56,31 @@ def calcular_importe(tipo, cp, pago):
         else:
             precio *= 1.20
     else:
-        precio *= 1.20  
+        precio *= 1.20
 
-   
-    if pago == 1: 
+    if pago == 1:
         precio *= 0.90
-    else:  
+    else:
         precio *= 1.5
 
     return precio
+
+
 def agregar_envio_manual(vec):
     codigo_postal = input("Ingrese los 9 caracteres del Codigo Postal: ")
     direccion_fis = input("Ingrese Los 20 caracteres de la Direccion Fisica Del Destino: ")
     tipo_envio = int(input("Ingrese tipo de envio (Entre 0 y 6): "))
+    while tipo_envio < 0 or tipo_envio > 6:
+        tipo_envio = int(input("Error!!! Ingrese tipo de envio (Entre 0 y 6): "))
     forma_pago = int(input("Ingrese Forma De Pago (1 o 2): "))
+    while forma_pago != 1 and forma_pago != 2:
+        forma_pago = int(input("Error!!! Ingrese Forma De Pago (1 o 2): "))
+
     envio = Envios(codigo_postal, direccion_fis, tipo_envio, forma_pago)
     vec.append(envio)
     print("Envio Agregado con exitos!")
+    return vec
+
 
 
 def agregar_envio(vec):
