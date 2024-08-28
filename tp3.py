@@ -21,6 +21,12 @@ def es_mayuscula(car):
 def es_digito(car):
     return '0' <= car <= '9'
 
+def solo_digit(car):
+    for caracter in car:
+        if not ('0' <= caracter <= '9'):
+            return False
+    return True
+
 
 def agregar_envio_manual(vec):
     codigo_postal = input("Ingrese los 9 caracteres del Codigo Postal: ")
