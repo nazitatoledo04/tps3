@@ -27,7 +27,43 @@ def solo_digit(car):
             return False
     return True
 
+def calcular_importe(tipo, cp, pago):
+    precio = 0
+    tipo = int(tipo)
+    if tipo == 0:
+        precio = 1100
+    elif tipo == 1:
+        precio = 1800
+    elif tipo == 2:
+        precio = 2450
+    elif tipo == 3:
+        precio = 8300
+    elif tipo == 4:
+        precio = 10900
+    elif tipo == 5:
+        precio = 14300
+    elif tipo == 6:
+        precio = 17900
+    
+  
+    if len(cp) == 9:
+        region = int(cp[0])  
+        if region in (0, 1, 2, 3):
+            precio *= 1.25
+        elif region in (4, 5, 6, 7):
+            precio *= 1.3
+        else:
+            precio *= 1.20
+    else:
+        precio *= 1.20  
 
+   
+    if pago == 1: 
+        precio *= 0.90
+    else:  
+        precio *= 1.5
+
+    return precio
 def agregar_envio_manual(vec):
     codigo_postal = input("Ingrese los 9 caracteres del Codigo Postal: ")
     direccion_fis = input("Ingrese Los 20 caracteres de la Direccion Fisica Del Destino: ")
