@@ -142,7 +142,7 @@ def principal():
     while opcion != 0:
 
         if opcion == 1:
-            if len(vec) > 0:
+            if len(vec) == 0:
                 vec = agregar_envio(vec)
             else:
                 eliminar_arreglo = input("Desea Eliminar el Arreglo? (S/N) ")
