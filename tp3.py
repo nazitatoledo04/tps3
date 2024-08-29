@@ -1,5 +1,5 @@
 from envios import *
-
+import os
 
 def obtener_tipo_control(linea):
     anterior = ""
@@ -82,42 +82,50 @@ def agregar_envio_manual(vec):
     return vec
 
 
-
 def agregar_envio(vec):
-    archivo = open("envios-tp3.txt", "r")
-    m = archivo.read()
+    archivo = open("envios-tp3.txt", "rt")
     n_envios = 0
     for i in archivo:
-        if n_envios >= 1:
-            cp = i[0:9].strip()
-            direccion = i[9:29].strip()
-            tipo = i[29].strip()
-            pago = i[30].strip()
-        for car in i:
-            es_digito(car)
-            es_mayuscula(car)
-
         if n_envios == 0:
             obtener_tipo_control(i)
+        else:
+            if len(i) >= 31:
+                cp = i[0:9].strip()
+                direccion = i[9:29].strip()
+                tipo = i[29].strip()
+                pago = i[30].strip()
+
+                envio = Envios(cp, direccion, tipo, pago)
+                vec.append(envio)
+
         n_envios += 1
 
-    codigo_postal = cp
-    direccion_fis = direccion
-    tipo_envio = tipo
-    forma_pago = pago
-    envio = Envios(codigo_postal, direccion_fis, tipo_envio, forma_pago)
-    vec.append(envio)
-    m.close
-    print("Envio Agregado con exitos!")
+    archivo.close()
+    print("Envios cargados con éxito desde el archivo!")
+    return vec
 
 
 def mostrar_arreglo(vec):
-    if len(vec) == 0:
-        print("No Hay Envios Cargados")
+    for envio in vec:
+        print("Codigo Postal: ", envio.codigo_postal, "Direccion Fisica: ", envio.direccion_fis, "Tipo de Envio: ",
+              envio.tipo_envio, "Forma De Pago: ", envio.forma_pago)
+
+
+def mostrar_arreglo_shellsort(vec):
+    vec = ordenar_codigo_postal(vec)
+    opcion = input("¿Desea mostrar todos los registros o solo los primeros m? (todos/m): ")
+    if opcion == "m":
+        m = int(input("Ingrese el número de registros a mostrar: "))
+        if m > len(vec):
+            m = len(vec)
     else:
-        for envio in vec:
-            print("Codigo Postal: ", envio.codigo_postal, "Direccion Fisica: ", envio.codigo_postal, "Tipo de Envio: ",
-                  envio.codigo_postal, "Forma De Pago: ", envio.codigo_postal)
+        m = len(vec)
+
+    for i in range(m):
+        envio = vec[i]
+        pais = obtener_paises(envio.codigo_postal)
+        print("Codigo Postal: ", envio.codigo_postal, "Direccion Fisica: ", envio.direccion_fis, "Tipo de Envio: ",
+              envio.tipo_envio, "Forma De Pago: ", envio.forma_pago, "Pais: ", pais)
 
 
 def menu():
@@ -135,28 +143,143 @@ def menu():
     return int(input("Ingrese Opcion: "))
 
 
+def ordenar_codigo_postal(vec):
+    n = len(vec)
+    medio = n // 2
+    while medio > 0:
+        for i in range(medio, n):
+            temp = vec[i]
+            j = i
+            while j >= medio and vec[j - medio].codigo_postal > temp.codigo_postal:
+                vec[j] = vec[j - medio]
+                j -= medio
+            vec[j] = temp
+        medio //= 2
+    return vec
+
+def obtener_paises(cp):
+    pais = ""
+    if len(cp) == 9 and cp[0].isalpha():
+        if cp[1].isdigit() and cp[2].isdigit() and cp[3].isdigit() and cp[4].isdigit():
+            if cp[5].isalpha() and cp[6].isalpha() and cp[7].isalpha():
+                pais = "Argentina"
+
+                if cp[0] == "A":
+                    provincia = "Salta"
+                elif cp[0] == "B":
+                    provincia = "Provincia de Buenos Aires"
+                elif cp[0] == "C":
+                    provincia = "Ciudad Autónoma de Buenos Aires"
+                elif cp[0] == "D":
+                    provincia = "San Luis"
+                elif cp[0] == "E":
+                    provincia = "Entre Ríos"
+                elif cp[0] == "F":
+                    provincia = "La Rioja"
+                elif cp[0] == "G":
+                    provincia = "Santiago del Estero"
+                elif cp[0] == "H":
+                    provincia = "Chaco"
+                elif cp[0] == "J":
+                    provincia = "San Juan"
+                elif cp[0] == "K":
+                    provincia = "Catamarca"
+                elif cp[0] == "L":
+                    provincia = "La Pampa"
+                elif cp[0] == "M":
+                    provincia = "Mendoza"
+                elif cp[0] == "N":
+                    provincia = "Misiones"
+                elif cp[0] == "P":
+                    provincia = "Formosa"
+                elif cp[0] == "Q":
+                    provincia = "Neuquén"
+                elif cp[0] == "R":
+                    provincia = "Río Negro"
+                elif cp[0] == "S":
+                    provincia = "Santa Fe"
+                elif cp[0] == "T":
+                    provincia = "Tucumán"
+                elif cp[0] == "U":
+                    provincia = "Chubut"
+                elif cp[0] == "V":
+                    provincia = "Tierra del Fuego"
+                elif cp[0] == "W":
+                    provincia = "Corrientes"
+                elif cp[0] == "X":
+                    provincia = "Córdoba"
+                elif cp[0] == "Y":
+                    provincia = "Jujuy"
+                elif cp[0] == "Z":
+                    provincia = "Santa Cruz"
+
+
+
+    elif len(cp) == 4 and cp[0].isdigit() and cp[1].isdigit() and cp[2].isdigit() and cp[3].isdigit():
+        pais = "Bolivia"
+
+    elif len(cp) == 5 and cp[0].isdigit() and cp[1].isdigit() and cp[2].isdigit() and cp[3].isdigit() and cp[
+        4].isdigit():
+        pais = "Uruguay"
+
+        if cp[0] == "1":
+            flag1 = True
+
+    elif len(cp) == 6 and cp[0].isdigit() and cp[1].isdigit() and cp[2].isdigit() and cp[3].isdigit() and cp[
+        4].isdigit() \
+            and cp[5].isdigit():
+        pais = "Paraguay"
+
+    elif len(cp) == 7 and cp[0].isdigit() and cp[1].isdigit() and cp[2].isdigit() and cp[3].isdigit() and cp[
+        4].isdigit() \
+            and cp[5].isdigit() and cp[6].isdigit():
+        pais = "Chile"
+
+    elif len(cp) == 9 and cp[0].isdigit() and cp[1].isdigit() and cp[2].isdigit() and cp[3].isdigit() and cp[
+        4].isdigit() \
+            and cp[5] == "-" and cp[6].isdigit() and cp[7].isdigit() and cp[8].isdigit():
+        pais = "Brasil"
+
+        if cp[0] == "0" or cp[0] == "1" or cp[0] == "2" or cp[0] == "3":
+            flagB1 = True
+
+        elif cp[0] == "4" or cp[0] == "5" or cp[0] == "6" or cp[0] == "7":
+            flagB2 = True
+
+        elif cp[0] == "8" or cp[0] == "9":
+            flagB3 = True
+
+    else:
+        pais = "Otro"
+
+    return pais or provincia
+
 def principal():
     vec = []
     opcion = 0
     opcion = menu()
     while opcion != 0:
-
         if opcion == 1:
             if len(vec) == 0:
                 vec = agregar_envio(vec)
-            else:
                 eliminar_arreglo = input("Desea Eliminar el Arreglo? (S/N) ")
                 eliminar_arreglo.lower()
                 if eliminar_arreglo == "s":
-                    vec = agregar_envio_manual(vec)
-                elif eliminar_arreglo == "n":
+                    vec = []
+                    print("ARREGLO ELIMINADO")
                     opcion = menu()
 
+                elif eliminar_arreglo == "n":
+                    opcion = menu()
         elif opcion == 2:
-            if len(vec) > 0:
+            if vec != 0:
+                vec = agregar_envio_manual(vec)
                 mostrar_arreglo(vec)
+
         elif opcion == 3:
-            pass
+            vec = ordenar_codigo_postal(vec)
+            mostrar_arreglo_shellsort(vec)
+
         elif opcion == 4:
             pass
         elif opcion == 5:
