@@ -111,7 +111,8 @@ def mostrar_arreglo(vec):
               envio.tipo_envio, "Forma De Pago: ", envio.forma_pago)
 
 
-def mostrar_arreglo_shellsort(vec):
+def mostrar_arreglo_shellsort(vec): #PUNTO 3    PUNTO 3     PUNTO 3     PUNTO 3  
+    encontrados = ""
     vec = ordenar_codigo_postal(vec)
     opcion = input("¿Desea mostrar todos los registros o solo los primeros m? (todos/m): ")
     if opcion == "m":
@@ -126,6 +127,9 @@ def mostrar_arreglo_shellsort(vec):
         pais = obtener_paises(envio.codigo_postal)
         print("Codigo Postal: ", envio.codigo_postal, "Direccion Fisica: ", envio.direccion_fis, "Tipo de Envio: ",
               envio.tipo_envio, "Forma De Pago: ", envio.forma_pago, "Pais: ", pais)
+
+
+    return
 
 
 def menu():
@@ -157,8 +161,9 @@ def ordenar_codigo_postal(vec):
         medio //= 2
     return vec
 
-def obtener_paises(cp):
+def obtener_paises(cp): #PUNTO 3    PUNTO 3 PUNTO 3 PUNTO 3 PUNTO 3 PUNTO 3
     pais = ""
+    provincia = ""
     if len(cp) == 9 and cp[0].isalpha():
         if cp[1].isdigit() and cp[2].isdigit() and cp[3].isdigit() and cp[4].isdigit():
             if cp[5].isalpha() and cp[6].isalpha() and cp[7].isalpha():
@@ -212,76 +217,71 @@ def obtener_paises(cp):
                     provincia = "Jujuy"
                 elif cp[0] == "Z":
                     provincia = "Santa Cruz"
-
-
-
     elif len(cp) == 4 and cp[0].isdigit() and cp[1].isdigit() and cp[2].isdigit() and cp[3].isdigit():
         pais = "Bolivia"
 
-    elif len(cp) == 5 and cp[0].isdigit() and cp[1].isdigit() and cp[2].isdigit() and cp[3].isdigit() and cp[
-        4].isdigit():
+    elif len(cp) == 5 and cp[0].isdigit() and cp[1].isdigit() and cp[2].isdigit() and cp[3].isdigit() and cp[4].isdigit():
         pais = "Uruguay"
 
-        if cp[0] == "1":
-            flag1 = True
-
-    elif len(cp) == 6 and cp[0].isdigit() and cp[1].isdigit() and cp[2].isdigit() and cp[3].isdigit() and cp[
-        4].isdigit() \
-            and cp[5].isdigit():
+    elif len(cp) == 6 and cp[0].isdigit() and cp[1].isdigit() and cp[2].isdigit() and cp[3].isdigit() and cp[4].isdigit() and cp[5].isdigit():
         pais = "Paraguay"
 
-    elif len(cp) == 7 and cp[0].isdigit() and cp[1].isdigit() and cp[2].isdigit() and cp[3].isdigit() and cp[
-        4].isdigit() \
-            and cp[5].isdigit() and cp[6].isdigit():
+    elif len(cp) == 7 and cp[0].isdigit() and cp[1].isdigit() and cp[2].isdigit() and cp[3].isdigit() and cp[4].isdigit() and cp[5].isdigit() and cp[6].isdigit():
         pais = "Chile"
 
-    elif len(cp) == 9 and cp[0].isdigit() and cp[1].isdigit() and cp[2].isdigit() and cp[3].isdigit() and cp[
-        4].isdigit() \
-            and cp[5] == "-" and cp[6].isdigit() and cp[7].isdigit() and cp[8].isdigit():
+    elif len(cp) == 9 and cp[0].isdigit() and cp[1].isdigit() and cp[2].isdigit() and cp[3].isdigit() and cp[4].isdigit() and cp[5] == "-" and cp[6].isdigit() and cp[7].isdigit() and cp[8].isdigit():
         pais = "Brasil"
-
-        if cp[0] == "0" or cp[0] == "1" or cp[0] == "2" or cp[0] == "3":
-            flagB1 = True
-
-        elif cp[0] == "4" or cp[0] == "5" or cp[0] == "6" or cp[0] == "7":
-            flagB2 = True
-
-        elif cp[0] == "8" or cp[0] == "9":
-            flagB3 = True
-
     else:
         pais = "Otro"
 
     return pais or provincia
 
+def buscar_envio_por_direccion_y_tipo(vec): #PUNTO 4 PUNTO 4 PUNTO 4 PUNTO 4 PUNTO 4
+    if len(vec) == 0:
+        print("No hay envíos cargados para buscar.")
+        return
+    direccion_buscar = input("Ingrese la Dirección de Envío a buscar: ")
+    tipo_envio_buscar = int(input("Ingrese el Tipo de Envío a buscar (ENTRE 0 Y 6): "))
+
+    for envio in vec:
+        if envio.direccion_fis == direccion_buscar and envio.tipo_envio == tipo_envio_buscar:
+            print("Registro encontrado:")
+            print("Codigo Postal: ", envio.codigo_postal, "Direccion Fisica: ", envio.direccion_fis, "Tipo de Envio: ",
+                  envio.tipo_envio, "Forma De Pago: ", envio.forma_pago)
+            return
+
+    print("No se encontró ningún envío con la dirección y tipo de envío especificados.")
+
+
 def principal():
     vec = []
-    opcion = 0
     opcion = menu()
     while opcion != 0:
         if opcion == 1:
             if len(vec) == 0:
                 vec = agregar_envio(vec)
-                eliminar_arreglo = input("Desea Eliminar el Arreglo? (S/N) ")
-                eliminar_arreglo.lower()
-                if eliminar_arreglo == "s":
-                    vec = []
-                    print("ARREGLO ELIMINADO")
-                    opcion = menu()
+            eliminar_arreglo = input("Desea Eliminar el Arreglo? (S/N) ")
+            if eliminar_arreglo.lower() == "s":
+                vec = []
+                print("ARREGLO ELIMINADO")
+            opcion = menu()
 
-                elif eliminar_arreglo == "n":
-                    opcion = menu()
         elif opcion == 2:
-            if vec != 0:
-                vec = agregar_envio_manual(vec)
-                mostrar_arreglo(vec)
+            vec = agregar_envio_manual(vec)
+            mostrar_arreglo(vec)
+            opcion = menu()
 
         elif opcion == 3:
-            vec = ordenar_codigo_postal(vec)
-            mostrar_arreglo_shellsort(vec)
+            if len(vec) > 0:
+                vec = ordenar_codigo_postal(vec)
+                mostrar_arreglo_shellsort(vec)
+            else:
+                print("No hay envíos para mostrar.")
+            opcion = menu()
 
         elif opcion == 4:
-            pass
+            buscar_envio_por_direccion_y_tipo(vec)
+            opcion = menu()
         elif opcion == 5:
             pass
         elif opcion == 6:
