@@ -253,6 +253,30 @@ def buscar_envio_por_direccion_y_tipo(vec): #PUNTO 4 PUNTO 4 PUNTO 4 PUNTO 4 PUN
     print("No se encontró ningún envío con la dirección y tipo de envío especificados.")
 
 
+#PUNTO-5--PUNTO-5--PUNTO-5--PUNTO-5--PUNTO-5--PUNTO-5--PUNTO-5--PUNTO5
+def cambiar_forma_pago(vec):
+    codigo_postal_buscar = input("Ingrese codigo postal a buscar: ")
+    encontrado = False
+    for envio in vec:
+
+        if envio.codigo_postal == codigo_postal_buscar:
+            encontrado = True
+            if envio.forma_pago == 1 and encontrado:
+                print("antigua forma de pago",envio.forma_pago)
+                envio.forma_pago= 2
+                print("nueva forma de pago", envio.forma_pago)
+                return
+
+            elif envio.forma_pago == 2 and encontrado:
+                print("antigua forma de pago", envio.forma_pago)
+                envio.forma_pago = 1
+                print("nueva forma de pago", envio.forma_pago)
+                return
+
+            if not encontrado:
+                print("codigo postal no encontrado")
+                return
+
 def principal():
     vec = []
     opcion = menu()
@@ -283,7 +307,7 @@ def principal():
             buscar_envio_por_direccion_y_tipo(vec)
             opcion = menu()
         elif opcion == 5:
-            pass
+            cambiar_forma_pago(vec)
         elif opcion == 6:
             pass
         elif opcion == 7:
