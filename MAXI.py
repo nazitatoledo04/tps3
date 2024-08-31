@@ -139,18 +139,17 @@ def mostrar_arreglo_shellsort(vec): #PUNTO 3    PUNTO 3     PUNTO 3     PUNTO 3
 
 
 def menu():
-    print("--Menu de opciones--")
-    print("1. Agregar Envio")
-    print("2. Mostrar Envios")
-    print("3. Buscar Envios")
-    print("4. Eliminar Envio")
-    print("5. punto 5")
-    print("6. punto 6")
-    print("7. punto 7")
-    print("8. punto 8")
-    print("9. punto 9")
+    print("-- Menu de Opciones --")
+    print("1. Crear el arreglo de registros desde el archivo de texto (Elimina los registros previos).")
+    print("2. Cargar datos de un envío manualmente y agregar al arreglo (Mantiene registros previos).")
+    print("3. Mostrar todos los registros ordenados por código postal (opción de mostrar solo los primeros m).")
+    print("4. Buscar un registro por dirección y tipo de envío.")
+    print("5. Buscar un registro por código postal y cambiar la forma de pago.")
+    print("6. Determinar cantidad de envíos por tipo de envío (dependiendo del tipo de control).")
+    print("7. Determinar el importe acumulado por tipo de envío (dependiendo del tipo de control).")
+    print("8. Mostrar tipo de envío con mayor importe acumulado y su porcentaje del total.")
+    print("9. Calcular el importe promedio y cantidad de envíos por debajo del promedio.")
     print("0. Salir")
-
 
 def ordenar_codigo_postal(vec):
     n = len(vec)
@@ -254,7 +253,7 @@ def buscar_envio_por_direccion_y_tipo(vec): #PUNTO 4 PUNTO 4 PUNTO 4 PUNTO 4 PUN
     for envio in vec:
         if envio.direc == direccion_buscar and envio.tipo == tipo_envio_buscar:
             print("Registro encontrado:")
-            print("Codigo Postal: ", envio.codigo_postal, "Direccion Fisica: ", envio.direc, "Tipo de Envio: ",
+            print("Codigo Postal: ", envio.cod, "Direccion Fisica: ", envio.direc, "Tipo de Envio: ",
                   envio.tipo, "Forma De Pago: ", envio.form)
             return
 
@@ -299,9 +298,9 @@ def calcular_importe_acumulado(vec, tipo_control): # -------------PUNTO 7-------
     for envio in vec:
         direccion_valida = es_direccion_valida(envio.direc)
         if tipo_control == "HC" and direccion_valida:
-            importe_acumulado[envio.tipo_envio] += calcular_importe(envio.tipo, envio.cod, envio.form)
+            importe_acumulado[envio.tipo] += calcular_importe(envio.tipo, envio.cod, envio.form)
         elif tipo_control == "SC":
-            importe_acumulado[envio.tipo_envio] += calcular_importe(envio.tipo, envio.cod, envio.form)
+            importe_acumulado[envio.tipo] += calcular_importe(envio.tipo, envio.cod, envio.form)
 
     print("Importe acumulado por tipo de envío:", importe_acumulado)
     return importe_acumulado
