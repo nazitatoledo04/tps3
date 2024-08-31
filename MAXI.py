@@ -1,6 +1,7 @@
 from envios import *
 import os
 
+
 def obtener_tipo_control(linea):
     anterior = ""
     for i in linea:
@@ -30,7 +31,7 @@ def solo_digit(car):
     return True
 
 
-def calcular_importe(tipo, cp, pago): # PUNTO 7-------------PUNTO 7-------------PUNTO 7-------------PUNTO 7-------------PUNTO 7
+def calcular_importe(tipo, cp, pago):
     precio = 0
     tipo = int(tipo)
     region = obtener_paises(cp)
@@ -106,10 +107,15 @@ def agregar_envio(vec):
     print("Envios cargados con éxito desde el archivo!")
     return vec, tipo_control
 
+
 def mostrar_arreglo(vec):
+    cont = 0
     for envio in vec:
-        print("Codigo Postal: ", envio.codigo_postal, "Direccion Fisica: ", envio.direccion_fis, "Tipo de Envio: ",
-              envio.tipo_envio, "Forma De Pago: ", envio.forma_pago)
+        print("Codigo Postal: ", envio.cod, "Direccion Fisica: ", envio.direc, "Tipo de Envio: ",
+              envio.tipo, "Forma De Pago: ", envio.form)
+        cont += 1
+
+    print(cont)
 
 
 def mostrar_arreglo_shellsort(vec): #PUNTO 3    PUNTO 3     PUNTO 3     PUNTO 3
@@ -125,10 +131,9 @@ def mostrar_arreglo_shellsort(vec): #PUNTO 3    PUNTO 3     PUNTO 3     PUNTO 3
 
     for i in range(m):
         envio = vec[i]
-        pais = obtener_paises(envio.codigo_postal)
-        print("Codigo Postal: ", envio.codigo_postal, "Direccion Fisica: ", envio.direccion_fis, "Tipo de Envio: ",
-              envio.tipo_envio, "Forma De Pago: ", envio.forma_pago, "Pais: ", pais)
-
+        pais = obtener_paises(envio.cod)
+        print("Codigo Postal: ", envio.cod, "Direccion Fisica: ", envio.direc, "Tipo de Envio: ",
+              envio.tipo, "Forma De Pago: ", envio.form, "Pais: ", pais)
 
     return
 
@@ -145,7 +150,6 @@ def menu():
     print("8. punto 8")
     print("9. punto 9")
     print("0. Salir")
-    return int(input("Ingrese Opcion: "))
 
 
 def ordenar_codigo_postal(vec):
@@ -155,12 +159,13 @@ def ordenar_codigo_postal(vec):
         for i in range(medio, n):
             temp = vec[i]
             j = i
-            while j >= medio and vec[j - medio].codigo_postal > temp.codigo_postal:
+            while j >= medio and vec[j - medio].cod > temp.cod:
                 vec[j] = vec[j - medio]
                 j -= medio
             vec[j] = temp
         medio //= 2
     return vec
+
 
 def obtener_paises(cp):  # PUNTO 3    PUNTO 3 PUNTO 3 PUNTO 3 PUNTO 3 PUNTO 3
     pais = ""
@@ -238,6 +243,7 @@ def obtener_paises(cp):  # PUNTO 3    PUNTO 3 PUNTO 3 PUNTO 3 PUNTO 3 PUNTO 3
 
     return pais or region
 
+
 def buscar_envio_por_direccion_y_tipo(vec): #PUNTO 4 PUNTO 4 PUNTO 4 PUNTO 4 PUNTO 4
     if len(vec) == 0:
         print("No hay envíos cargados para buscar.")
@@ -246,22 +252,39 @@ def buscar_envio_por_direccion_y_tipo(vec): #PUNTO 4 PUNTO 4 PUNTO 4 PUNTO 4 PUN
     tipo_envio_buscar = int(input("Ingrese el Tipo de Envío a buscar (ENTRE 0 Y 6): "))
 
     for envio in vec:
-        if envio.direccion_fis == direccion_buscar and envio.tipo_envio == tipo_envio_buscar:
+        if envio.direc == direccion_buscar and envio.tipo == tipo_envio_buscar:
             print("Registro encontrado:")
-            print("Codigo Postal: ", envio.codigo_postal, "Direccion Fisica: ", envio.direccion_fis, "Tipo de Envio: ",
-                  envio.tipo_envio, "Forma De Pago: ", envio.forma_pago)
+            print("Codigo Postal: ", envio.codigo_postal, "Direccion Fisica: ", envio.direc, "Tipo de Envio: ",
+                  envio.tipo, "Forma De Pago: ", envio.form)
             return
 
     print("No se encontró ningún envío con la dirección y tipo de envío especificados.")
 
+def cambiar_forma_pago(vec):
+    if len(vec) == 0:
+        print("No hay envíos cargados para modificar.")
+        return
+    cp_buscar = input("Ingrese el Código Postal del envío a modificar: ")
+    for envio in vec:
+        if envio.cod == cp_buscar:
+            if envio.form== 1:
+                envio.form = 2
+            else:
+                envio.form = 1
+            print("Registro Encontrado - Forma de pago modificada con éxito.")
+            print("Codigo Postal: ", envio.cod, "Direccion Fisica: ", envio.direc, "Tipo de Envio: ",
+                  envio.tipo, "Forma De Pago: ", envio.form)
+            return
+    print("No se encontró ningún envío con el código postal especificado.")
+
 def contar_envios_por_tipo(vec, tipo_control): #PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6PUNTO 6------PUNTO 6
     conteo_envios = [0] * 7
     for envio in vec:
-        direccion_valida = es_direccion_valida(envio.direccion_fis)
+        direccion_valida = es_direccion_valida(envio.direc)
         if tipo_control == "HC" and direccion_valida:
-            conteo_envios[envio.tipo_envio] += 1
+            conteo_envios[envio.tipo] += 1
         elif tipo_control == "SC":
-            conteo_envios[envio.tipo_envio] += 1
+            conteo_envios[envio.tipo] += 1
 
     print("Conteo de envíos por tipo:", conteo_envios)
     return conteo_envios
@@ -270,68 +293,85 @@ def contar_envios_por_tipo(vec, tipo_control): #PUNTO 6------PUNTO 6 PUNTO 6----
 def es_direccion_valida(direccion): #PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6PUNTO 6------PUNTO 6
     return len(direccion) <= 20
 
+
 def calcular_importe_acumulado(vec, tipo_control): # -------------PUNTO 7-------------PUNTO 7-------------PUNTO 7-------------PUNTO 7-------------PUNTO 7
     importe_acumulado = [0] * 7
     for envio in vec:
-        direccion_valida = es_direccion_valida(envio.direccion_fis)
+        direccion_valida = es_direccion_valida(envio.direc)
         if tipo_control == "HC" and direccion_valida:
-            importe_acumulado[envio.tipo_envio] += calcular_importe(envio.tipo_envio, envio.codigo_postal, envio.forma_pago)
+            importe_acumulado[envio.tipo_envio] += calcular_importe(envio.tipo, envio.cod, envio.form)
         elif tipo_control == "SC":
-            importe_acumulado[envio.tipo_envio] += calcular_importe(envio.tipo_envio, envio.codigo_postal, envio.forma_pago)
+            importe_acumulado[envio.tipo_envio] += calcular_importe(envio.tipo, envio.cod, envio.form)
 
     print("Importe acumulado por tipo de envío:", importe_acumulado)
     return importe_acumulado
 
 def principal():
     vec = []
-    opcion = menu()
     tipo_control = "HC"
-    while opcion != 0:
-        if opcion == 1:
-            if len(vec) == 0:
+    op = -1
+    band1 = True
+
+    while op != 0:
+        menu()
+        print("")
+        op = int(input("ingrese opcion a cargar: "))
+
+        if op == 1:
+
+            if band1:
                 vec, tipo_control = agregar_envio(vec)
-            eliminar_arreglo = input("Desea Eliminar el Arreglo? (S/N) ")
-            if eliminar_arreglo.lower() == "s":
-                vec = []
-                print("ARREGLO ELIMINADO")
-            opcion = menu()
+                band1 = False
 
-        elif opcion == 2:
-            vec = agregar_envio_manual(vec)
+            else:
+                eliminar_arreglo = input("Desea Eliminar el Arreglo? (S/N) ")
+
+                if eliminar_arreglo.lower() == "s":
+                    vec = []
+                    print("ARREGLO ELIMINADO")
+
+        elif op == 2:
+
+            if band1:
+                vec, tipo_control = agregar_envio(vec)
+                vec = agregar_envio_manual(vec)
+
+            else:
+                vec = agregar_envio_manual(vec)
+
             mostrar_arreglo(vec)
-            opcion = menu()
 
-        elif opcion == 3:
+        elif op == 3:
+
             if len(vec) > 0:
                 vec = ordenar_codigo_postal(vec)
                 mostrar_arreglo_shellsort(vec)
             else:
                 print("No hay envíos para mostrar.")
-            opcion = menu()
 
-        elif opcion == 4:
+        elif op == 4:
             buscar_envio_por_direccion_y_tipo(vec)
-            opcion = menu()
-        elif opcion == 5:
 
-            pass
-        elif opcion == 6:
+        elif op == 5:
+            cambiar_forma_pago(vec)
+
+        elif op == 6:
             contar_envios_por_tipo(vec, tipo_control)
-            opcion = menu()
-        elif opcion == 7:
+
+        elif op == 7:
             calcular_importe_acumulado(vec,tipo_control)
-            menu()
-        elif opcion == 8:
+
+        elif op == 8:
             pass
-            opcion = menu()
-        elif opcion == 9:
+
+        elif op == 9:
             pass
-            opcion = menu()
-        elif opcion == 0:
-            break
+
+        elif op == 0:
+            print("Gracias por usar nuestro menu, vuelva pronto")
+
         else:
             print("Opcion Invalida")
-            opcion = menu()
 
 
 if __name__ == '__main__':
