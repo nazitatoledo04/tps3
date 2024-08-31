@@ -115,7 +115,7 @@ def mostrar_arreglo(vec):
               envio.tipo, "Forma De Pago: ", envio.form)
         cont += 1
 
-    print(cont)
+
 
 
 def mostrar_arreglo_shellsort(vec): #PUNTO 3    PUNTO 3     PUNTO 3     PUNTO 3
