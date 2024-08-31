@@ -30,7 +30,7 @@ def solo_digit(car):
     return True
 
 
-def calcular_importe(tipo, cp, pago):
+def calcular_importe(tipo, cp, pago): # PUNTO 7-------------PUNTO 7-------------PUNTO 7-------------PUNTO 7-------------PUNTO 7
     precio = 0
     tipo = int(tipo)
     region = obtener_paises(cp)
@@ -270,7 +270,7 @@ def contar_envios_por_tipo(vec, tipo_control): #PUNTO 6------PUNTO 6 PUNTO 6----
 def es_direccion_valida(direccion): #PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6PUNTO 6------PUNTO 6
     return len(direccion) <= 20
 
-def calcular_importe_acumulado(vec, tipo_control):
+def calcular_importe_acumulado(vec, tipo_control): # -------------PUNTO 7-------------PUNTO 7-------------PUNTO 7-------------PUNTO 7-------------PUNTO 7
     importe_acumulado = [0] * 7
     for envio in vec:
         direccion_valida = es_direccion_valida(envio.direccion_fis)
