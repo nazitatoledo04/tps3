@@ -33,6 +33,7 @@ def solo_digit(car):
 def calcular_importe(tipo, cp, pago):
     precio = 0
     tipo = int(tipo)
+    region = obtener_paises(cp)
     if tipo == 0:
         precio = 1100
     elif tipo == 1:
@@ -49,7 +50,6 @@ def calcular_importe(tipo, cp, pago):
         precio = 17900
 
     if len(cp) == 9:
-        region = int(cp[0])
         if region in (0, 1, 2, 3):
             precio *= 1.25
         elif region in (4, 5, 6, 7):
@@ -162,62 +162,63 @@ def ordenar_codigo_postal(vec):
         medio //= 2
     return vec
 
-def obtener_paises(cp): #PUNTO 3    PUNTO 3 PUNTO 3 PUNTO 3 PUNTO 3 PUNTO 3
+def obtener_paises(cp):  # PUNTO 3    PUNTO 3 PUNTO 3 PUNTO 3 PUNTO 3 PUNTO 3
     pais = ""
     provincia = ""
+    region = 0
     if len(cp) == 9 and cp[0].isalpha():
         if cp[1].isdigit() and cp[2].isdigit() and cp[3].isdigit() and cp[4].isdigit():
             if cp[5].isalpha() and cp[6].isalpha() and cp[7].isalpha():
                 pais = "Argentina"
-
-                if cp[0] == "A":
-                    provincia = "Salta"
-                elif cp[0] == "B":
-                    provincia = "Provincia de Buenos Aires"
-                elif cp[0] == "C":
-                    provincia = "Ciudad Autónoma de Buenos Aires"
-                elif cp[0] == "D":
-                    provincia = "San Luis"
-                elif cp[0] == "E":
-                    provincia = "Entre Ríos"
-                elif cp[0] == "F":
-                    provincia = "La Rioja"
-                elif cp[0] == "G":
-                    provincia = "Santiago del Estero"
-                elif cp[0] == "H":
-                    provincia = "Chaco"
-                elif cp[0] == "J":
-                    provincia = "San Juan"
-                elif cp[0] == "K":
-                    provincia = "Catamarca"
-                elif cp[0] == "L":
-                    provincia = "La Pampa"
-                elif cp[0] == "M":
-                    provincia = "Mendoza"
-                elif cp[0] == "N":
-                    provincia = "Misiones"
-                elif cp[0] == "P":
-                    provincia = "Formosa"
-                elif cp[0] == "Q":
-                    provincia = "Neuquén"
-                elif cp[0] == "R":
-                    provincia = "Río Negro"
-                elif cp[0] == "S":
-                    provincia = "Santa Fe"
-                elif cp[0] == "T":
-                    provincia = "Tucumán"
-                elif cp[0] == "U":
-                    provincia = "Chubut"
-                elif cp[0] == "V":
-                    provincia = "Tierra del Fuego"
-                elif cp[0] == "W":
-                    provincia = "Corrientes"
-                elif cp[0] == "X":
-                    provincia = "Córdoba"
-                elif cp[0] == "Y":
-                    provincia = "Jujuy"
-                elif cp[0] == "Z":
-                    provincia = "Santa Cruz"
+                provincia = cp[0]
+                if provincia == "A":
+                    region = 1
+                elif provincia == "B":
+                    region = 2
+                elif provincia == "C":
+                    region = 3
+                elif provincia == "D":
+                    region = 4
+                elif provincia == "E":
+                    region = 5
+                elif provincia == "F":
+                    region = 6
+                elif provincia == "G":
+                    region = 7
+                elif provincia == "H":
+                    region = 8
+                elif provincia == "J":
+                    region = 9
+                elif provincia == "K":
+                    region = 10
+                elif provincia == "L":
+                    region = 11
+                elif provincia == "M":
+                    region = 12
+                elif provincia == "N":
+                    region = 13
+                elif provincia == "P":
+                    region = 14
+                elif provincia == "Q":
+                    region = 15
+                elif provincia == "R":
+                    region = 16
+                elif provincia == "S":
+                    region = 17
+                elif provincia == "T":
+                    region = 18
+                elif provincia == "U":
+                    region = 19
+                elif provincia == "V":
+                    region = 20
+                elif provincia == "W":
+                    region = 21
+                elif provincia == "X":
+                    region = 22
+                elif provincia == "Y":
+                    region = 23
+                elif provincia == "Z":
+                    region = 24
     elif len(cp) == 4 and cp[0].isdigit() and cp[1].isdigit() and cp[2].isdigit() and cp[3].isdigit():
         pais = "Bolivia"
 
@@ -235,8 +236,7 @@ def obtener_paises(cp): #PUNTO 3    PUNTO 3 PUNTO 3 PUNTO 3 PUNTO 3 PUNTO 3
     else:
         pais = "Otro"
 
-    return pais or provincia
-
+    return pais or region
 
 def buscar_envio_por_direccion_y_tipo(vec): #PUNTO 4 PUNTO 4 PUNTO 4 PUNTO 4 PUNTO 4
     if len(vec) == 0:
@@ -270,7 +270,17 @@ def contar_envios_por_tipo(vec, tipo_control): #PUNTO 6------PUNTO 6 PUNTO 6----
 def es_direccion_valida(direccion): #PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6PUNTO 6------PUNTO 6
     return len(direccion) <= 20
 
+def calcular_importe_acumulado(vec, tipo_control):
+    importe_acumulado = [0] * 7
+    for envio in vec:
+        direccion_valida = es_direccion_valida(envio.direccion_fis)
+        if tipo_control == "HC" and direccion_valida:
+            importe_acumulado[envio.tipo_envio] += calcular_importe(envio.tipo_envio, envio.codigo_postal, envio.forma_pago)
+        elif tipo_control == "SC":
+            importe_acumulado[envio.tipo_envio] += calcular_importe(envio.tipo_envio, envio.codigo_postal, envio.forma_pago)
 
+    print("Importe acumulado por tipo de envío:", importe_acumulado)
+    return importe_acumulado
 
 def principal():
     vec = []
@@ -303,14 +313,14 @@ def principal():
             buscar_envio_por_direccion_y_tipo(vec)
             opcion = menu()
         elif opcion == 5:
+
             pass
-            opcion = menu()
         elif opcion == 6:
             contar_envios_por_tipo(vec, tipo_control)
             opcion = menu()
         elif opcion == 7:
-            pass
-            opcion = menu()
+            calcular_importe_acumulado(vec,tipo_control)
+            menu()
         elif opcion == 8:
             pass
             opcion = menu()
