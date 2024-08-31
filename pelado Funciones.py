@@ -260,6 +260,22 @@ def buscar_envio_por_direccion_y_tipo(vec): #PUNTO 4 PUNTO 4 PUNTO 4 PUNTO 4 PUN
 
     print("No se encontró ningún envío con la dirección y tipo de envío especificados.")
 
+def cambiar_forma_pago(vec):
+    if len(vec) == 0:
+        print("No hay envíos cargados para modificar.")
+        return
+    cp_buscar = input("Ingrese el Código Postal del envío a modificar: ")
+    for envio in vec:
+        if envio.cod == cp_buscar:
+            if envio.form== 1:
+                envio.form = 2
+            else:
+                envio.form = 1
+            print("Registro Encontrado - Forma de pago modificada con éxito.")
+            print("Codigo Postal: ", envio.cod, "Direccion Fisica: ", envio.direc, "Tipo de Envio: ",
+                  envio.tipo, "Forma De Pago: ", envio.form)
+            return
+    print("No se encontró ningún envío con el código postal especificado.")
 
 def contar_envios_por_tipo(vec, tipo_control): #PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6PUNTO 6------PUNTO 6
     conteo_envios = [0] * 7
@@ -278,18 +294,17 @@ def es_direccion_valida(direccion): #PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6 P
     return len(direccion) <= 20
 
 
-def calcular_importe_acumulado(vec, tipo_control):
+def calcular_importe_acumulado(vec, tipo_control): # -------------PUNTO 7-------------PUNTO 7-------------PUNTO 7-------------PUNTO 7-------------PUNTO 7
     importe_acumulado = [0] * 7
     for envio in vec:
         direccion_valida = es_direccion_valida(envio.direc)
         if tipo_control == "HC" and direccion_valida:
-            importe_acumulado[envio.tipo] += calcular_importe(envio.tipo, envio.codigo_postal, envio.form)
+            importe_acumulado[envio.tipo_envio] += calcular_importe(envio.tipo, envio.cod, envio.form)
         elif tipo_control == "SC":
-            importe_acumulado[envio.tipo] += calcular_importe(envio.tipo, envio.codigo_postal, envio.form)
+            importe_acumulado[envio.tipo_envio] += calcular_importe(envio.tipo, envio.cod, envio.form)
 
     print("Importe acumulado por tipo de envío:", importe_acumulado)
     return importe_acumulado
-
 
 def principal():
     vec = []
@@ -338,7 +353,7 @@ def principal():
             buscar_envio_por_direccion_y_tipo(vec)
 
         elif op == 5:
-            pass
+            cambiar_forma_pago(vec)
 
         elif op == 6:
             contar_envios_por_tipo(vec, tipo_control)
