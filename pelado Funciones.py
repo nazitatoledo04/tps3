@@ -109,17 +109,26 @@ def agregar_envio(vec):
 
 
 def mostrar_arreglo(vec):
-    cont = 0
+    if len(vec) == 0:
+        print("No hay envíos cargados para mostrar.")
+        return
+
+    print("=" * 80)
+    print(f"{'| Código Postal |':^15}{'Dirección Física':^25}{'| Tipo de Envío |':^15}{'Forma de Pago |':^15}")
+    print("=" * 80)
+
     for envio in vec:
-        print("Codigo Postal: ", envio.cod, "Direccion Fisica: ", envio.direc, "Tipo de Envio: ",
-              envio.tipo, "Forma De Pago: ", envio.form)
-        cont += 1
+        print(f"{envio.cod:^15}{envio.direc:^25}{envio.tipo:^15}{envio.form:^15}")
+
+    print("=" * 80)
+    print(f"Total de envíos: {len(vec)}")
 
 
 
-
-def mostrar_arreglo_shellsort(vec): #PUNTO 3    PUNTO 3     PUNTO 3     PUNTO 3
-    encontrados = ""
+def mostrar_arreglo_shellsort(vec): #PUNTO 3    PUNTO 3     PUNTO 3     PUNTO 3 PUNTO 3    PUNTO 3     PUNTO 3     PUNTO 3 PUNTO 3    PUNTO 3     PUNTO 3     PUNTO 3
+    if len(vec) == 0:
+        print("No hay envíos cargados para mostrar.")
+        return
     vec = ordenar_codigo_postal(vec)
     opcion = input("¿Desea mostrar todos los registros o solo los primeros m? (todos/m): ")
     if opcion == "m":
@@ -129,11 +138,14 @@ def mostrar_arreglo_shellsort(vec): #PUNTO 3    PUNTO 3     PUNTO 3     PUNTO 3
     else:
         m = len(vec)
 
+    print("=" * 90)
+    print(f"{'| Código Postal |':^15}{'Dirección Física':^25}{'| Tipo de Envío |':^20}{'Forma de Pago |':^15}{'País':^15}{'|':^0}")
+    print("=" * 90)
+
     for i in range(m):
         envio = vec[i]
         pais = obtener_paises(envio.cod)
-        print("Codigo Postal: ", envio.cod, "Direccion Fisica: ", envio.direc, "Tipo de Envio: ",
-              envio.tipo, "Forma De Pago: ", envio.form, "Pais: ", pais)
+        print(f"{envio.cod:^15}{envio.direc:^25}{envio.tipo:^15}{envio.form:^20}{pais:^15}")
 
     return
 
@@ -243,38 +255,55 @@ def obtener_paises(cp):  # PUNTO 3    PUNTO 3 PUNTO 3 PUNTO 3 PUNTO 3 PUNTO 3
     return pais or region
 
 
-def buscar_envio_por_direccion_y_tipo(vec): #PUNTO 4 PUNTO 4 PUNTO 4 PUNTO 4 PUNTO 4
+def buscar_envio_por_direccion_y_tipo(vec): #PUNTO 4 PUNTO 4 PUNTO 4 PUNTO 4 PUNTO 4 PUNTO 4 PUNTO 4 PUNTO 4 PUNTO 4 PUNTO 4
     if len(vec) == 0:
         print("No hay envíos cargados para buscar.")
         return
+
     direccion_buscar = input("Ingrese la Dirección de Envío a buscar: ")
     tipo_envio_buscar = int(input("Ingrese el Tipo de Envío a buscar (ENTRE 0 Y 6): "))
 
+    print("=" * 80)
+    print(f"{'| Código Postal |':^15}{'Dirección Física':^25}{'| Tipo de Envío |':^15}{'Forma de Pago':^15}")
+    print("=" * 80)
+
     for envio in vec:
         if envio.direc == direccion_buscar and envio.tipo == tipo_envio_buscar:
-            print("Registro encontrado:")
-            print("Codigo Postal: ", envio.cod, "Direccion Fisica: ", envio.direc, "Tipo de Envio: ",
-                  envio.tipo, "Forma De Pago: ", envio.form)
+
+            print(f"{envio.cod:^15}{envio.direc:^25}{envio.tipo:^15}{envio.form:^15}")
+            print("=" * 80)
+            print("Registro encontrado.")
             return
 
     print("No se encontró ningún envío con la dirección y tipo de envío especificados.")
+    print("=" * 80)
 
-def cambiar_forma_pago(vec):
+def cambiar_forma_pago(vec): # PUNTO 5-------------------------PUNTO 5-------------------------PUNTO 5-------------------------PUNTO 5-------------------------PUNTO 5
     if len(vec) == 0:
         print("No hay envíos cargados para modificar.")
         return
+
     cp_buscar = input("Ingrese el Código Postal del envío a modificar: ")
+
+    print("=" * 80)
+    print(f"{'| Código Postal |':^15}{'Dirección Física':^25}{'| Tipo de Envío |':^15}{'Forma de Pago':^15}")
+    print("=" * 80)
+
     for envio in vec:
         if envio.cod == cp_buscar:
-            if envio.form== 1:
+            if envio.form == 1:
                 envio.form = 2
             else:
                 envio.form = 1
+
+            print(f"{envio.cod:^15}{envio.direc:^25}{envio.tipo:^15}{envio.form:^15}")
+            print("=" * 80)
             print("Registro Encontrado - Forma de pago modificada con éxito.")
-            print("Codigo Postal: ", envio.cod, "Direccion Fisica: ", envio.direc, "Tipo de Envio: ",
-                  envio.tipo, "Forma De Pago: ", envio.form)
             return
+
     print("No se encontró ningún envío con el código postal especificado.")
+    print("=" * 80)
+
 
 def contar_envios_por_tipo(vec, tipo_control): #PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6PUNTO 6------PUNTO 6
     conteo_envios = [0] * 7
