@@ -334,21 +334,22 @@ def calcular_importe_acumulado(vec, tipo_control): # -------------PUNTO 7-------
     print("Importe acumulado por tipo de envío:", importe_acumulado)
     return importe_acumulado
 
-def mayor_importe(vec, tipo_control):# -------------PUNTO 8-------------PUNTO 8-------------PUNTO 8-------------PUNTO 8-------------PUNTO 8
+def mayor_importe(vec, tipo_control): # -------------PUNTO 8-------------PUNTO 8-------------PUNTO 8-------------PUNTO 8-------------PUNTO 8
     importe_acumulado = calcular_importe_acumulado(vec, tipo_control)
     
-    max_importe = max(importe_acumulado)
+    max_importe = importe_acumulado[0]
+    mayor_importe = 0
     
-    
-    importe_total = sum(importe_acumulado)
-    
-    porcentaje = (max_importe / importe_total) * 100 
-    if importe_total != 0:
-        print(f"Tipo de envío con mayor importe acumulado: {max_importe}")
-        print(f"Importe acumulado: ${max_importe:.2f}")
-        print(f"Porcentaje del total: {porcentaje:.2f}%")
+    for i in range (1, len(importe_acumulado)):
+        if importe_acumulado[i] > max_importe:
+            max_importe = importe_acumulado[i]
+            mayor_importe = i
+            
+    importe_total = 0
+    for i in importe_acumulado:
+        importe_total += i
         
-    return max_importe
+    porcentaje = (max_importe / importe_total) * 100 
 
 def principal():
     vec = []
