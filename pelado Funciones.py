@@ -351,8 +351,7 @@ def mayor_importe(vec, tipo_control): # -------------PUNTO 8-------------PUNTO 8
         
     porcentaje = (max_importe / importe_total) * 100 
 def calcular_promedio(vec, tipo_control): # -------------PUNTO 9-------------PUNTO 9-------------PUNTO 9-------------PUNTO 9-------------PUNTO 9
-    total_importe = 0
-    cantidad_envios = 0
+    pass
     
 def principal():
     vec = []
