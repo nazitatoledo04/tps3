@@ -1,4 +1,4 @@
-from envios import *
+from pelado_class import *
 import os
 
 def obtener_tipo_control(linea):
