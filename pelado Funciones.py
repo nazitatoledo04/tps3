@@ -151,7 +151,7 @@ def mostrar_arreglo_shellsort(vec): #PUNTO 3    PUNTO 3     PUNTO 3     PUNTO 3 
 
 
 def menu():
-    print("-- Menu de Opciones --")
+    print("-- Menú de Opciones --")
     print("1. Crear el arreglo de registros desde el archivo de texto (Elimina los registros previos).")
     print("2. Cargar datos de un envío manualmente y agregar al arreglo (Mantiene registros previos).")
     print("3. Mostrar todos los registros ordenados por código postal (opción de mostrar solo los primeros m).")
@@ -350,7 +350,10 @@ def mayor_importe(vec, tipo_control): # -------------PUNTO 8-------------PUNTO 8
         importe_total += i
         
     porcentaje = (max_importe / importe_total) * 100 
-
+def calcular_promedio(vec, tipo_control): # -------------PUNTO 9-------------PUNTO 9-------------PUNTO 9-------------PUNTO 9-------------PUNTO 9
+    total_importe = 0
+    cantidad_envios = 0
+    
 def principal():
     vec = []
     tipo_control = "HC"
@@ -360,7 +363,7 @@ def principal():
     while op != 0:
         menu()
         print("")
-        op = int(input("ingrese opcion a cargar: "))
+        op = int(input("ingrese opción a cargar: "))
 
         if op == 1:
 
@@ -410,7 +413,7 @@ def principal():
             mayor_importe(vec, tipo_control)
 
         elif op == 9:
-            pass
+            calcular_promedio(vec, tipo_control)
 
         elif op == 0:
             print("Gracias por usar nuestro menu, vuelva pronto")
