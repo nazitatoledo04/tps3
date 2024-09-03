@@ -305,7 +305,8 @@ def cambiar_forma_pago(vec): # PUNTO 5-------------------------PUNTO 5----------
     print("=" * 80)
 
 
-def contar_envios_por_tipo(vec, tipo_control): #PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6PUNTO 6------PUNTO 6
+def contar_envios_por_tipo(vec, tipo_control):
+    # PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6PUNTO 6------PUNTO 6
     conteo_envios = [0] * 7
     for envio in vec:
         direccion_valida = es_direccion_valida(envio.direc)
@@ -314,15 +315,19 @@ def contar_envios_por_tipo(vec, tipo_control): #PUNTO 6------PUNTO 6 PUNTO 6----
         elif tipo_control == "SC":
             conteo_envios[envio.tipo] += 1
 
-    print("Conteo de envíos por tipo:", conteo_envios)
+    print("Conteo de envíos por tipo:")
+    for tipo in range(len(conteo_envios)):
+        print("Tipo " + str(tipo) + ": " + str(conteo_envios[tipo]))
+
     return conteo_envios
 
 
-def es_direccion_valida(direccion): #PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6PUNTO 6------PUNTO 6
+def es_direccion_valida(direccion):  # PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6PUNTO 6------PUNTO 6
     return len(direccion) <= 20
 
 
-def calcular_importe_acumulado(vec, tipo_control): # -------------PUNTO 7-------------PUNTO 7-------------PUNTO 7-------------PUNTO 7-------------PUNTO 7
+def calcular_importe_acumulado(vec, tipo_control):
+    # -------------PUNTO 7-------------PUNTO 7-------------PUNTO 7-------------PUNTO 7-------------PUNTO 7
     importe_acumulado = [0] * 7
     for envio in vec:
         direccion_valida = es_direccion_valida(envio.direc)
@@ -331,8 +336,12 @@ def calcular_importe_acumulado(vec, tipo_control): # -------------PUNTO 7-------
         elif tipo_control == "SC":
             importe_acumulado[envio.tipo] += calcular_importe(envio.tipo, envio.cod, envio.form)
 
-    print("Importe acumulado por tipo de envío:", importe_acumulado)
+    print("Importe acumulado por tipo de envío:")
+    for tipo in range(len(importe_acumulado)):
+        print("Tipo " + str(tipo) + ": " + str(importe_acumulado[tipo]))
+
     return importe_acumulado
+
 
 def mayor_importe(vec, tipo_control): # -------------PUNTO 8-------------PUNTO 8-------------PUNTO 8-------------PUNTO 8-------------PUNTO 8
     importe_acumulado = calcular_importe_acumulado(vec, tipo_control)
