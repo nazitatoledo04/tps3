@@ -1,4 +1,4 @@
-from pelado_class import *
+from funciones import *
 import os
 
 def obtener_tipo_control(linea):
