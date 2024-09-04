@@ -360,7 +360,39 @@ def mayor_importe(vec, tipo_control): # -------------PUNTO 8-------------PUNTO 8
         
     porcentaje = (max_importe / importe_total) * 100 
 def calcular_promedio(vec, tipo_control): # -------------PUNTO 9-------------PUNTO 9-------------PUNTO 9-------------PUNTO 9-------------PUNTO 9
-    pass
+    total_importes = 0
+    cantidad_envios = 0
+    
+    for envio in vec:
+        direccion_valida = []
+        if tipo_control == "HC" and direccion_valida:
+            total_importes += calcular_importe(envio.tipo, envio.cod, envio.form)
+            cantidad_envios += 1
+        elif tipo_control == "SC":
+            total_importes += calcular_importe(envio.tipo, envio.cod, envio.form)
+            cantidad_envios += 1
+            
+    if cantidad_envios == 0:
+        print("No hay envíos para calcular el promedio.")
+        return
+
+    promedio = total_importes / cantidad_envios
+    print("Promedio de importe por tipo de envío:", promedio)
+
+    cantidad_inferior = 0
+    for envio in vec:
+        direccion_valida = []
+        importe_envio = calcular_importe(envio.tipo, envio.cod, envio.form)
+        if tipo_control == "HC" and direccion_valida and importe_envio < promedio:
+            cantidad_inferior += 1
+        elif tipo_control == "SC" and importe_envio < promedio:
+            cantidad_inferior += 1
+            
+    print("Cantidad inferior al promedio:", cantidad_inferior)
+
+
+   
+
     
 def principal():
     vec = []
