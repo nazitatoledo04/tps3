@@ -380,7 +380,8 @@ def mayor_importe(vec, tipo_control): # -------------PUNTO 8-------------PUNTO 8
         importe_total += i
         
     porcentaje = (max_importe / importe_total) * 100 
-def calcular_promedio(vec, tipo_control):
+    
+def calcular_promedio(vec, tipo_control): #PUTNO 9-----------PUNTO 9-----------PUNTO 9-----------PUNTO 9-----------PUNTO 9-----------PUNTO 9-----------PUNTO 9
     total_importes = 0
     cantidad_envios = 0
 
