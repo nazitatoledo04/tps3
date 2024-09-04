@@ -255,7 +255,7 @@ def obtener_paises(cp):  # PUNTO 3    PUNTO 3 PUNTO 3 PUNTO 3 PUNTO 3 PUNTO 3
     return pais or region
 
 
-def buscar_envio_por_direccion_y_tipo(vec): #PUNTO 4 PUNTO 4 PUNTO 4 PUNTO 4 PUNTO 4 PUNTO 4 PUNTO 4 PUNTO 4 PUNTO 4 PUNTO 4
+def buscar_envio_por_direccion_y_tipo(vec): #PUTNO 4-----------PUNTO 4-----------PUNTO 4-----------PUNTO 4-----------PUNTO 4
     if len(vec) == 0:
         print("No hay envíos cargados para buscar.")
         return
@@ -268,8 +268,28 @@ def buscar_envio_por_direccion_y_tipo(vec): #PUNTO 4 PUNTO 4 PUNTO 4 PUNTO 4 PUN
     print("=" * 80)
 
     for envio in vec:
-        if envio.direc == direccion_buscar and envio.tipo == tipo_envio_buscar:
+        direc_envio = envio.direc
+        direc_buscar = direccion_buscar
 
+
+        largo_envio = len(direc_envio)
+        if direc_envio[-1] == ".":
+            largo_envio -= 1
+
+        largo_buscar = len(direc_buscar)
+        if direc_buscar[-1] == ".":
+            largo_buscar -= 1
+
+        coincidencia = True
+        if largo_envio == largo_buscar:
+            for i in range(largo_envio):
+                if direc_envio[i] != direc_buscar[i]:
+                    coincidencia = False
+                    break
+        else:
+            coincidencia = False
+
+        if coincidencia and envio.tipo == tipo_envio_buscar:
             print(f"{envio.cod:^15}{envio.direc:^25}{envio.tipo:^15}{envio.form:^15}")
             print("=" * 80)
             print("Registro encontrado.")
@@ -277,6 +297,7 @@ def buscar_envio_por_direccion_y_tipo(vec): #PUNTO 4 PUNTO 4 PUNTO 4 PUNTO 4 PUN
 
     print("No se encontró ningún envío con la dirección y tipo de envío especificados.")
     print("=" * 80)
+
 
 def cambiar_forma_pago(vec): # PUNTO 5-------------------------PUNTO 5-------------------------PUNTO 5-------------------------PUNTO 5-------------------------PUNTO 5
     if len(vec) == 0:
