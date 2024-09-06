@@ -8,6 +8,7 @@ class Envios:
     def string(self):
         return self.cod + "," + self.direc + "," + self.tipo + "," + self.form
 
+
 def obtener_tipo_control(linea):
     anterior = ""
     for i in linea:
@@ -21,17 +22,21 @@ def obtener_tipo_control(linea):
         anterior = i
     return "HC"
 
+
 def es_mayuscula(car):
     return 'A' <= car <= 'Z'
 
+
 def es_digito(car):
     return '0' <= car <= '9'
+
 
 def solo_digit(car):
     for caracter in car:
         if not ('0' <= caracter <= '9'):
             return False
     return True
+
 
 def calcular_importe(tipo, cp, pago):
     precio = 0
@@ -69,6 +74,7 @@ def calcular_importe(tipo, cp, pago):
 
     return precio
 
+
 def agregar_envio_manual(vec):
     codigo_postal = input("Ingrese los 9 caracteres del Codigo Postal: ")
     direccion_fis = input("Ingrese la Direccion Fisica Del Destino: ")
@@ -83,6 +89,7 @@ def agregar_envio_manual(vec):
     vec.append(envio)
     print("Envio Agregado con exitos!")
     return vec
+
 
 def agregar_envio(vec):
     archivo = open("envios-tp3.txt", "rt")
@@ -107,6 +114,7 @@ def agregar_envio(vec):
     print("Envios cargados con éxito desde el archivo!")
     return vec, tipo_control
 
+
 def mostrar_arreglo(vec):
     if len(vec) == 0:
         print("No hay envíos cargados para mostrar.")
@@ -122,14 +130,15 @@ def mostrar_arreglo(vec):
     print("=" * 80)
     print(f"Total de envíos: {len(vec)}")
 
-def mostrar_arreglo_shellsort(
-        vec):  # PUNTO 3    PUNTO 3     PUNTO 3     PUNTO 3 PUNTO 3    PUNTO 3     PUNTO 3     PUNTO 3 PUNTO 3    PUNTO 3     PUNTO 3     PUNTO 3
+
+def mostrar_arreglo_shellsort(vec):  #PUNTO-3---PUNTO-3---PUNTO-3---PUNTO-3---PUNTO-3---PUNTO-3---PUNTO-3
+
     if len(vec) == 0:
         print("No hay envíos cargados para mostrar.")
         return
     vec = ordenar_codigo_postal(vec)
     opcion = input("¿Desea mostrar todos los registros o solo los primeros m? (todos/m): ")
-    if opcion == "m":
+    if opcion == "m" or opcion == "M":
         m = int(input("Ingrese el número de registros a mostrar: "))
         if m > len(vec):
             m = len(vec)
@@ -137,8 +146,7 @@ def mostrar_arreglo_shellsort(
         m = len(vec)
 
     print("=" * 90)
-    print(
-        f"{'| Código Postal |':^15}{'Dirección Física':^25}{'| Tipo de Envío |':^20}{'Forma de Pago |':^15}{'País':^15}{'|':^0}")
+    print(f"{'| Código Postal |':^15}{'Dirección Física':^25}{'| Tipo de Envío |':^20}{'Forma de Pago |':^15}{'País':^15}{'|':^0}")
     print("=" * 90)
 
     for i in range(m):
@@ -147,6 +155,7 @@ def mostrar_arreglo_shellsort(
         print(f"{envio.cod:^15}{envio.direc:^25}{envio.tipo:^15}{envio.form:^20}{pais:^15}")
 
     return
+
 
 def menu():
     print("-- Menú de Opciones --")
@@ -161,6 +170,7 @@ def menu():
     print("9. Calcular el importe promedio y cantidad de envíos por debajo del promedio.")
     print("0. Salir")
 
+
 def ordenar_codigo_postal(vec):
     n = len(vec)
     medio = n // 2
@@ -174,6 +184,7 @@ def ordenar_codigo_postal(vec):
             vec[j] = temp
         medio //= 2
     return vec
+
 
 def obtener_paises(cp):  # PUNTO 3    PUNTO 3 PUNTO 3 PUNTO 3 PUNTO 3 PUNTO 3
     pais = ""
@@ -235,25 +246,22 @@ def obtener_paises(cp):  # PUNTO 3    PUNTO 3 PUNTO 3 PUNTO 3 PUNTO 3 PUNTO 3
     elif len(cp) == 4 and cp[0].isdigit() and cp[1].isdigit() and cp[2].isdigit() and cp[3].isdigit():
         pais = "Bolivia"
 
-    elif len(cp) == 5 and cp[0].isdigit() and cp[1].isdigit() and cp[2].isdigit() and cp[3].isdigit() and cp[
-        4].isdigit():
+    elif len(cp) == 5 and cp[0].isdigit() and cp[1].isdigit() and cp[2].isdigit() and cp[3].isdigit() and cp[4].isdigit():
         pais = "Uruguay"
 
-    elif len(cp) == 6 and cp[0].isdigit() and cp[1].isdigit() and cp[2].isdigit() and cp[3].isdigit() and cp[
-        4].isdigit() and cp[5].isdigit():
+    elif len(cp) == 6 and cp[0].isdigit() and cp[1].isdigit() and cp[2].isdigit() and cp[3].isdigit() and cp[4].isdigit() and cp[5].isdigit():
         pais = "Paraguay"
 
-    elif len(cp) == 7 and cp[0].isdigit() and cp[1].isdigit() and cp[2].isdigit() and cp[3].isdigit() and cp[
-        4].isdigit() and cp[5].isdigit() and cp[6].isdigit():
+    elif len(cp) == 7 and cp[0].isdigit() and cp[1].isdigit() and cp[2].isdigit() and cp[3].isdigit() and cp[4].isdigit() and cp[5].isdigit() and cp[6].isdigit():
         pais = "Chile"
 
-    elif len(cp) == 9 and cp[0].isdigit() and cp[1].isdigit() and cp[2].isdigit() and cp[3].isdigit() and cp[
-        4].isdigit() and cp[5] == "-" and cp[6].isdigit() and cp[7].isdigit() and cp[8].isdigit():
+    elif len(cp) == 9 and cp[0].isdigit() and cp[1].isdigit() and cp[2].isdigit() and cp[3].isdigit() and cp[4].isdigit() and cp[5] == "-" and cp[6].isdigit() and cp[7].isdigit() and cp[8].isdigit():
         pais = "Brasil"
     else:
         pais = "Otro"
 
     return pais or region
+
 
 def buscar_envio_por_direccion_y_tipo(
         vec):  # PUTNO 4-----------PUNTO 4-----------PUNTO 4-----------PUNTO 4-----------PUNTO 4
@@ -298,8 +306,8 @@ def buscar_envio_por_direccion_y_tipo(
     print("No se encontró ningún envío con la dirección y tipo de envío especificados.")
     print("=" * 80)
 
-def cambiar_forma_pago(
-        vec):  # PUNTO 5-------------------------PUNTO 5-------------------------PUNTO 5-------------------------PUNTO 5-------------------------PUNTO 5
+
+def cambiar_forma_pago(vec):  #PUNTO 5-------------------------PUNTO 5-------------------------PUNTO 5
     if len(vec) == 0:
         print("No hay envíos cargados para modificar.")
         return
@@ -325,6 +333,7 @@ def cambiar_forma_pago(
     print("No se encontró ningún envío con el código postal especificado.")
     print("=" * 80)
 
+
 def contar_envios_por_tipo(vec, tipo_control):
     # PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6PUNTO 6------PUNTO 6
     conteo_envios = [0] * 7
@@ -341,12 +350,12 @@ def contar_envios_por_tipo(vec, tipo_control):
 
     return conteo_envios
 
-def es_direccion_valida(
-        direccion):  # PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6 PUNTO 6------PUNTO 6PUNTO 6------PUNTO 6
+
+def es_direccion_valida(direccion):  #PUNTO 6------PUNTO 6-PUNTO 6------PUNTO 6-PUNTO 6------PUNTO 6
     return len(direccion) <= 20
 
-def calcular_importe_acumulado(vec, tipo_control):
-    # -------------PUNTO 7-------------PUNTO 7-------------PUNTO 7-------------PUNTO 7-------------PUNTO 7
+
+def calcular_importe_acumulado(vec, tipo_control):  # -------------PUNTO 7-------------PUNTO 7-------------PUNTO 7
     importe_acumulado = [0] * 7
     for envio in vec:
         direccion_valida = es_direccion_valida(envio.direc)
@@ -361,8 +370,9 @@ def calcular_importe_acumulado(vec, tipo_control):
 
     return importe_acumulado
 
+
 def mayor_importe(vec,
-                  tipo_control):  # -------------PUNTO 8-------------PUNTO 8-------------PUNTO 8-------------PUNTO 8-------------PUNTO 8
+                  tipo_control):  #-------------PUNTO 8-------------PUNTO 8-------------PUNTO 8-------------PUNTO 8
     importe_acumulado = calcular_importe_acumulado(vec, tipo_control)
 
     max_importe = importe_acumulado[0]
@@ -379,8 +389,9 @@ def mayor_importe(vec,
 
     porcentaje = (max_importe / importe_total) * 100
 
+
 def calcular_promedio(vec,
-                      tipo_control):  # PUTNO 9-----------PUNTO 9-----------PUNTO 9-----------PUNTO 9-----------PUNTO 9-----------PUNTO 9-----------PUNTO 9
+                      tipo_control):  #PUTNO 9-----------PUNTO 9-----------PUNTO 9-----------PUNTO 9-----------PUNTO 9
     total_importes = 0
     cantidad_envios = 0
 

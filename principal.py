@@ -2,7 +2,6 @@ from funciones import *
 import os
 
 
-    
 def principal():
     vec = []
     tipo_control = "HC"
@@ -56,7 +55,7 @@ def principal():
             contar_envios_por_tipo(vec, tipo_control)
 
         elif op == 7:
-            calcular_importe_acumulado(vec,tipo_control)
+            calcular_importe_acumulado(vec, tipo_control)
 
         elif op == 8:
             mayor_importe(vec, tipo_control)
