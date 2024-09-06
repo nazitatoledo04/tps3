@@ -71,7 +71,7 @@ def calcular_importe(tipo, cp, pago):
 
 def agregar_envio_manual(vec):
     codigo_postal = input("Ingrese los 9 caracteres del Codigo Postal: ")
-    direccion_fis = input("Ingrese Los 20 caracteres de la Direccion Fisica Del Destino: ")
+    direccion_fis = input("Ingrese la Direccion Fisica Del Destino: ")
     tipo_envio = int(input("Ingrese tipo de envio (Entre 0 y 6): "))
     while tipo_envio < 0 or tipo_envio > 6:
         tipo_envio = int(input("Error!!! Ingrese tipo de envio (Entre 0 y 6): "))
