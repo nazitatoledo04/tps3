@@ -370,10 +370,20 @@ def calcular_importe_acumulado(vec, tipo_control):  # -------------PUNTO 7------
 
     return importe_acumulado
 
+def calcular_importe_punto8(vec, tipo_control):  # -------------PUNTO8-------------PUNTO 8-------------PUNTO 8
+    importe_acumulado = [0] * 7
+    for envio in vec:
+        direccion_valida = es_direccion_valida(envio.direc)
+        if tipo_control == "HC" and direccion_valida:
+            importe_acumulado[envio.tipo] += calcular_importe(envio.tipo, envio.cod, envio.form)
+        elif tipo_control == "SC":
+            importe_acumulado[envio.tipo] += calcular_importe(envio.tipo, envio.cod, envio.form)
+
+    return importe_acumulado
 
 def mayor_importe(vec,
                   tipo_control):  # PUNTO 8-------------------------PUNTO 8-------------------------PUNTO 8-------------------------PUNTO 8-------------------------PUNTO 8
-    importe_acumulado = calcular_importe_acumulado(vec, tipo_control)
+    importe_acumulado = calcular_importe_punto8(vec, tipo_control)
 
     max_importe = importe_acumulado[0]
     mayor_importe = 0
