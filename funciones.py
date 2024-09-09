@@ -263,8 +263,7 @@ def obtener_paises(cp):  # PUNTO 3    PUNTO 3 PUNTO 3 PUNTO 3 PUNTO 3 PUNTO 3
     return pais or region
 
 
-def buscar_envio_por_direccion_y_tipo(
-        vec):  # PUTNO 4-----------PUNTO 4-----------PUNTO 4-----------PUNTO 4-----------PUNTO 4
+def buscar_envio_por_direccion_y_tipo(vec):  # PUTNO 4-----------PUNTO 4-----------PUNTO 4-----------PUNTO 4-----------PUNTO 4
     if len(vec) == 0:
         print("No hay envíos cargados para buscar.")
         return
@@ -381,8 +380,7 @@ def calcular_importe_punto8(vec, tipo_control):  # -------------PUNTO8----------
 
     return importe_acumulado
 
-def mayor_importe(vec,
-                  tipo_control):  # PUNTO 8-------------------------PUNTO 8-------------------------PUNTO 8-------------------------PUNTO 8-------------------------PUNTO 8
+def mayor_importe(vec,tipo_control):  # PUNTO 8-------------------------PUNTO 8-------------------------PUNTO 8-------------------------PUNTO 8-------------------------PUNTO 8
     importe_acumulado = calcular_importe_punto8(vec, tipo_control)
 
     max_importe = importe_acumulado[0]
@@ -404,8 +402,7 @@ def mayor_importe(vec,
     print("Este monto representa un", round(porcentaje, 2), "% del monto total.")
 
 
-def calcular_promedio(vec,
-                      tipo_control):  #PUTNO 9-----------PUNTO 9-----------PUNTO 9-----------PUNTO 9-----------PUNTO 9
+def calcular_promedio(vec,tipo_control):  #PUTNO 9-----------PUNTO 9-----------PUNTO 9-----------PUNTO 9-----------PUNTO 9
     total_importes = 0
     cantidad_envios = 0
 
