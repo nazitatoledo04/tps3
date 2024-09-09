@@ -345,7 +345,9 @@ def contar_envios_por_tipo(vec, tipo_control):
 
     print("Conteo de envíos por tipo:")
     for tipo in range(len(conteo_envios)):
+        print("")
         print("Tipo " + str(tipo) + ": " + str(conteo_envios[tipo]))
+        print("")
 
     return conteo_envios
 
@@ -365,7 +367,9 @@ def calcular_importe_acumulado(vec, tipo_control):  # -------------PUNTO 7------
 
     print("Importe acumulado por tipo de envío:")
     for tipo in range(len(importe_acumulado)):
+        print("")
         print("Tipo " + str(tipo) + ": " + str(importe_acumulado[tipo]))
+        print("")
 
     return importe_acumulado
 
@@ -396,10 +400,11 @@ def mayor_importe(vec,tipo_control):  # PUNTO 8-------------------------PUNTO 8-
         importe_total += importe_acumulado[i]
 
     porcentaje = (max_importe / importe_total) * 100
-
+    print("")
     print("El tipo de envío con mayor importe final acumulado es el tipo", mayor_importe, "con un monto de",
           max_importe)
     print("Este monto representa un", round(porcentaje, 2), "% del monto total.")
+    print("")
 
 
 def calcular_promedio(vec,tipo_control):  #PUTNO 9-----------PUNTO 9-----------PUNTO 9-----------PUNTO 9-----------PUNTO 9
@@ -433,5 +438,6 @@ def calcular_promedio(vec,tipo_control):  #PUTNO 9-----------PUNTO 9-----------P
             cantidad_inferior += 1
         elif tipo_control == "SC" and importe_envio < promedio:
             cantidad_inferior += 1
-
+    print("")
     print("Cantidad de envíos con importe inferior al promedio:", cantidad_inferior)
+    print("")
