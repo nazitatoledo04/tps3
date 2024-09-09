@@ -35,7 +35,6 @@ def principal():
             else:
                 vec = agregar_envio_manual(vec)
 
-            mostrar_arreglo(vec)
 
         elif op == 3:
 
